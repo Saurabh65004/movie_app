@@ -10,12 +10,13 @@
 export const SHOW_FAVOURITES='SHOW_FAVOURITES';
 export const SHOW_MOVIES='SHOW_MOVIES';
 export const ADD_MOVIES='ADD_MOVIES';
-export const ADD_FAVOURITES='ADD_FAVOURITES';
-export const REVOVE_FAVOURITES='REMOVE_FAVOURITES';
+export const ADD_TO_FAVOURITES='ADD_TO_FAVOURITES';
+export const REMOVE_FROM_FAVOURITES='REMOVE_FROM_FAVOURITES';
 
 //Action Creators
 export function addMovies(movies){
     return {
+        // we run this initially to add movies to our state.
         type: ADD_MOVIES,
         movies
     }
@@ -33,16 +34,16 @@ export function showMovies(){
     }
 }
 
-export function addFavourites(movie){
+export function addToFavourites(movie){
     return {
-        type: ADD_FAVOURITES,
+        type: ADD_TO_FAVOURITES,
         movie,
     }
 }
 
-export function removeFavourites(movie){
+export function removeFromFavourites(movie){
     return {
-        type: REVOVE_FAVOURITES,
+        type: REMOVE_FROM_FAVOURITES,
         movie
     }
 }

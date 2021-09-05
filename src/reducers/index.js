@@ -1,4 +1,4 @@
-import { ADD_MOVIES, ADD_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REVOVE_FAVOURITES} from "../actions";
+import { ADD_MOVIES, ADD_TO_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REMOVE_FROM_FAVOURITES} from "../actions";
 //our state will never be undefined but in start if it is pass a default argument.
 
 const initialState={
@@ -15,12 +15,12 @@ export default function movies(state=initialState, action){
                 list: action.movies,
                 favouriteDisplay: false,
             }
-        case ADD_FAVOURITES:
+        case ADD_TO_FAVOURITES:
             return {
                 ...state,
                 favourites: [action.movie, ...state.favourites],                    //adding new movie first and then copy all movies from prev state.
             }
-        case REVOVE_FAVOURITES:
+        case REMOVE_FROM_FAVOURITES:
             const newFavorites=state.favourites.filter((favMovie)=> favMovie !== action.movie)
             return{
                 ...state,
@@ -40,6 +40,10 @@ export default function movies(state=initialState, action){
         default:
             return state;
     }
+}
+
+export function search(state={}, action){
+
 }
 
 
