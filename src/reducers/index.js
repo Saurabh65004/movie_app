@@ -1,13 +1,13 @@
 import { ADD_MOVIES, ADD_TO_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REMOVE_FROM_FAVOURITES} from "../actions";
 //our state will never be undefined but in start if it is pass a default argument.
 
-const initialState={
+const initialMovieState={
     list: [],
     favourites: [],
     favouriteDisplay: false   
 }
 
-export default function movies(state=initialState, action){
+export default function movies(state=initialMovieState, action){
     switch(action.type){
         case ADD_MOVIES:
             return {
@@ -42,8 +42,12 @@ export default function movies(state=initialState, action){
     }
 }
 
-export function search(state={}, action){
+const initialSearchState={
+    result: {}
+};
 
+export function search(state=initialSearchState, action){
+    return state;
 }
 
 
