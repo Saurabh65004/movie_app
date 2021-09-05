@@ -6,12 +6,20 @@ import movies from './reducers';
 import App from './components/App';
 
 const store=createStore(movies);
-console.log(store);
-console.log('State',store.getState());
+// console.log(store);
+// console.log('Before State',store.getState());
 
+// store.dispatch(
+//   {
+//     type: 'ADD_MOVIES',
+//     movies: [{name: 'Superman'}],
+//   }
+//  );
+
+// console.log("After State ", store.getState());
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App store={store}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
@@ -20,6 +28,8 @@ ReactDOM.render(
 
 /*
 Created the state and passed our movies reducer in it.
+We can dispatch an action to the reducer with an intent to change the state using store.dispatch().
+Redux will internally pass our action to the reducer.
 */
 
 

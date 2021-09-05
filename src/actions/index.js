@@ -6,6 +6,46 @@
 //     type: 'DECREASE_COUNT',
 // }
 
+//Action Types
+export const SHOW_FAVOURITES='SHOW_FAVOURITES';
+export const SHOW_MOVIES='SHOW_MOVIES';
+export const ADD_MOVIES='ADD_MOVIES';
+export const ADD_FAVOURITES='ADD_FAVOURITES';
+export const REVOVE_FAVOURITES='REMOVE_FAVOURITES';
+
+//Action Creators
+export function addMovies(movies){
+    return {
+        type: ADD_MOVIES,
+        movies
+    }
+}
+
+export function showfavourites(){
+    return {
+        type: SHOW_FAVOURITES,
+    }
+}
+
+export function showMovies(){
+    return {
+        type:SHOW_MOVIES,
+    }
+}
+
+export function addFavourites(movie){
+    return {
+        type: ADD_FAVOURITES,
+        movie,
+    }
+}
+
+export function removeFavourites(movie){
+    return {
+        type: REVOVE_FAVOURITES,
+        movie
+    }
+}
 
 // Actions are just javascript objects, used to express an intent to change the state.
 

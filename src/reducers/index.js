@@ -1,18 +1,82 @@
+import { ADD_MOVIES, ADD_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REVOVE_FAVOURITES} from "../actions";
 //our state will never be undefined but in start if it is pass a default argument.
 
-
-export default function movies(state=[], action){
-    if(action.type === 'ADD_MOVIES'){
-        return action.movies;
-    }
-
-    //in case action matches none of our if else simply return the state.
-    return state;
+const initialState={
+    list: [],
+    favourites: [],
+    favouriteDisplay: false   
 }
+
+export default function movies(state=initialState, action){
+    switch(action.type){
+        case ADD_MOVIES:
+            return {
+                ...state,
+                list: action.movies,
+                favouriteDisplay: false,
+            }
+        case ADD_FAVOURITES:
+            return {
+                ...state,
+                favourites: [action.movie, ...state.favourites],                    //adding new movie first and then copy all movies from prev state.
+            }
+        case REVOVE_FAVOURITES:
+            const newFavorites=state.favourites.filter((favMovie)=> favMovie !== action.movie)
+            return{
+                ...state,
+                favourites: newFavorites,
+            }
+
+        case SHOW_FAVOURITES:
+            return {
+                ...state,
+                favouriteDisplay: true,
+            }
+        case SHOW_MOVIES:
+            return {
+                ...state,
+                favouriteDisplay: false,
+            }
+        default:
+            return state;
+    }
+}
+
+
+// export default function movies(state=initialState, action){
+//     if(action.type === 'ADD_MOVIES'){
+//         return {
+//             ...state,
+//             list: action.movies,
+//         }
+//     }
+//     return state;
+// }
+
+// export default function movies(state=[], action){
+//     if(action.type === 'ADD_MOVIES'){
+//         return action.movies;
+
+//     }
+
+//     //in case type does not match none of our if else simply return the state.
+//     return state;
+// }
 
 
 /*
 Reducers always return the new state, we don't change the prev state, but always return the new state.
+
+var o= {a:1, b:2,c:3};
+undefined
+var o2={...o};
+undefined
+o2
+{a: 1, b: 2, c: 3}
+o2 === o
+false
+o2={...o, b:100};
+{a: 1, b: 100, c: 3}
 */
 
 
