@@ -51,12 +51,12 @@ class App extends React.Component {
       return (
         <div className="App">
           <Navbar />
-          <div className="main">
+          <div className="main"> 
               <div className="tabs">
-                <div className="tab" onClick={()=>this.props.store.dispatch(showMovies())}>
+                <div className={`tab ${favouriteDisplay ? '': 'active-tabs'}`} onClick={()=>this.props.store.dispatch(showMovies())}>
                     Movies
                 </div>
-                <div className="tab" onClick={()=>this.props.store.dispatch(showfavourites())}>
+                <div className={`tab ${favouriteDisplay ? 'active-tabs': ''}`} onClick={()=>this.props.store.dispatch(showfavourites())}>
                       Favourites
                 </div>
               </div>
