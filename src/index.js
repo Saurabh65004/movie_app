@@ -14,13 +14,20 @@ import App from './components/App';
 // }
 // logger points to a middleware function which recieves an object by redux having dispatch and getState.
 
-const logger=function({dispatch, getState}){
-  return function(next){
-    return function(action){
-      console.log("ACTION_TYPE = ", action.type);
-      next(action);        //we need to pass next as otherwise our app will be stuck,
-    }
-  }
+// const logger=function({dispatch, getState}){
+//   return function(next){
+//     return function(action){
+//       console.log("ACTION_TYPE = ", action.type);
+//       next(action);        //we need to pass next as otherwise our app will be stuck,
+//     }
+//   }
+// }
+
+//Alternate way of writing middleware.
+
+const logger=({dispatch, getState})=>(next)=>(action)=>{
+  console.log("ACTION TYPE: ", action.type);
+  next(action);
 }
 
 const store=createStore(rootReducer, applyMiddleware(logger));
