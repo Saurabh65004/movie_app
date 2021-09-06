@@ -1,13 +1,15 @@
+import { combineReducers } from "redux";
+
 import { ADD_MOVIES, ADD_TO_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REMOVE_FROM_FAVOURITES} from "../actions";
 //our state will never be undefined but in start if it is pass a default argument.
 
 const initialMovieState={
     list: [],
     favourites: [],
-    favouriteDisplay: false   
+    favouriteDisplay: false,  
 }
 
-export default function movies(state=initialMovieState, action){
+export function movies(state=initialMovieState, action){
     switch(action.type){
         case ADD_MOVIES:
             return {
@@ -43,13 +45,42 @@ export default function movies(state=initialMovieState, action){
 }
 
 const initialSearchState={
-    result: {}
+    result: {},
 };
 
 export function search(state=initialSearchState, action){
     return state;
 }
 
+const initialRootState={
+    movies: initialMovieState,
+    search: initialSearchState,
+};
+
+export default combineReducers({
+    movies,
+    search
+});
+
+
+// export default combineReducers({
+//     movies: movies,
+//     search: search
+// });
+
+
+// export default function rootReducer(state=initialRootState, action){
+//     return {
+//         movies: movies(state.movies, action),
+//         search: search(state.search, action),
+//     }
+// }
+
+
+// This root reducer is already created for us by redux and we can import it as method combineReducers.
+//This function accepts an arguements which an objects, and property specified by it.
+// and pass value as the reference of respective reducers.
+// redux is smart enough to call respective reducers for each state.
 
 // export default function movies(state=initialState, action){
 //     if(action.type === 'ADD_MOVIES'){

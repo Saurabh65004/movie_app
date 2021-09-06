@@ -4,6 +4,7 @@ import MovieCard from './MovieCard';
 import {data} from '../data';
 import { addMovies, showfavourites, showMovies } from '../actions';
 
+
 class App extends React.Component {
 
     componentDidMount(){
@@ -29,7 +30,10 @@ class App extends React.Component {
       }
 
       isMovieFavourite=(movie)=>{
-        const {favourites}=this.props.store.getState();
+        const {movies}= this.props.store.getState();      //{movies: {} , search: {}}
+        // const {favourites}=movies.favourites;
+        const {favourites}=movies;
+
         const index=favourites.indexOf(movie);
         if(index !== -1){
           return true;
@@ -39,33 +43,36 @@ class App extends React.Component {
 
     render(){
       console.log('Render', this.props.store.getState());
-      const {list, favourites, favouriteDisplay} = this.props.store.getState();
+      const { movies } =this.props.store.getState();
+      console.log("MOVIES", movies);
+      const {list, favourites, favouriteDisplay} = movies;
       //const movies=this.props.store.getState();
 
       return (
-        <div className="App"><Navbar />
-        <div className="main">
-            <div className="tabs">
-              <div className="tab" onClick={()=>this.props.store.dispatch(showMovies())}>
-                  Movies
+        <div className="App">
+          <Navbar />
+          <div className="main">
+              <div className="tabs">
+                <div className="tab" onClick={()=>this.props.store.dispatch(showMovies())}>
+                    Movies
+                </div>
+                <div className="tab" onClick={()=>this.props.store.dispatch(showfavourites())}>
+                      Favourites
+                </div>
               </div>
-              <div className="tab" onClick={()=>this.props.store.dispatch(showfavourites())}>
-                    Favourites
-              </div>
+              <div className="list">
+                {/* {data.map((movie, index)=>{
+                  return <MovieCard movie={movie} key={`movies-${index}`}/>
+                })} */}
+                {favouriteDisplay? favourites.map((movie, index)=>{
+                  return <MovieCard movie={movie} key={`movies-${index}`} dispatch={this.props.store.dispatch} isFavourite={this.isMovieFavourite(movie)}/>
+                }) 
+                : list.map((movie, index)=>{
+                  return <MovieCard movie={movie} key={`movies-${index}`} dispatch={this.props.store.dispatch} isFavourite={this.isMovieFavourite(movie)}/>
+                })}
             </div>
-            <div className="list">
-              {/* {data.map((movie, index)=>{
-                return <MovieCard movie={movie} key={`movies-${index}`}/>
-              })} */}
-              {favouriteDisplay? favourites.map((movie, index)=>{
-                return <MovieCard movie={movie} key={`movies-${index}`} dispatch={this.props.store.dispatch} isFavourite={this.isMovieFavourite(movie)}/>
-              }) 
-              : list.map((movie, index)=>{
-                return <MovieCard movie={movie} key={`movies-${index}`} dispatch={this.props.store.dispatch} isFavourite={this.isMovieFavourite(movie)}/>
-              })}
           </div>
-        </div>
-          
+            
         </div>
       );
     }
