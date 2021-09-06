@@ -52,10 +52,10 @@ export function search(state=initialSearchState, action){
     return state;
 }
 
-const initialRootState={
-    movies: initialMovieState,
-    search: initialSearchState,
-};
+// const initialRootState={
+//     movies: initialMovieState,
+//     search: initialSearchState,
+// };
 
 export default combineReducers({
     movies,

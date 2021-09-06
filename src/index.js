@@ -1,11 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import './index.css';
 import rootReducer from './reducers';
 import App from './components/App';
 
-const store=createStore(rootReducer);
+// const logger=function(obj){
+//   return function(next){
+//     return function(action){
+//       console.log('ACTION_TYPE', action.type);
+//     }
+//   }
+// }
+// logger points to a middleware function which recieves an object by redux having dispatch and getState.
+
+const logger=function({dispatch, getState}){
+  return function(next){
+    return function(action){
+      console.log("ACTION_TYPE = ", action.type);
+      next(action);        //we need to pass next as otherwise our app will be stuck,
+    }
+  }
+}
+
+const store=createStore(rootReducer, applyMiddleware(logger));
 // console.log(store);
 // console.log('Before State',store.getState());
 
@@ -17,6 +35,7 @@ const store=createStore(rootReducer);
 //  );
 
 // console.log("After State ", store.getState());
+
 ReactDOM.render(
   <React.StrictMode>
     <App store={store}/>
@@ -24,7 +43,13 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
+/*
+//Action Creator -> Action ->  dispatch ->  MiddleWare1 -> Middlware 2 -> MiddleWare N
+// -> dispatch -> Reducers -> Store.
+//next() will refer to another middleware as curried, and in case no middleware is there it will 
+// next() will refer to dispatch.
+// we need to call next() in every middleware.
+*/
 
 /*
 Created the state and passed our movies reducer in it.
