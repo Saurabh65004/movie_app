@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
+//import thunk from 'redux-thunk';
 import './index.css';
 import rootReducer from './reducers';
 import App from './components/App';
@@ -26,11 +27,23 @@ import App from './components/App';
 //Alternate way of writing middleware.
 
 const logger=({dispatch, getState})=>(next)=>(action)=>{
-  console.log("ACTION TYPE: ", action.type);
+  if(typeof action !== "function"){
+    console.log("ACTION TYPE: ", action.type);
+  }
   next(action);
 }
 
-const store=createStore(rootReducer, applyMiddleware(logger));
+const thunk=({dispatch, getState})=>(next)=>(action)=>{
+  if(typeof action === "function"){
+    action(dispatch); 
+    //if our action is a function we pass dispatch to it to dispatch that action.
+    return;
+  }
+  //if not, pass the action forward.
+  next(action);
+}
+
+const store=createStore(rootReducer, applyMiddleware(logger, thunk));
 // console.log(store);
 // console.log('Before State',store.getState());
 
@@ -56,6 +69,8 @@ ReactDOM.render(
 //next() will refer to another middleware as curried, and in case no middleware is there it will 
 // next() will refer to dispatch.
 // we need to call next() in every middleware.
+
+We get thunk package by redux-thunk  with same code. 
 */
 
 /*

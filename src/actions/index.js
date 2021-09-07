@@ -11,8 +11,9 @@ export const SHOW_FAVOURITES='SHOW_FAVOURITES';
 export const SHOW_MOVIES='SHOW_MOVIES';
 export const ADD_MOVIES='ADD_MOVIES';
 export const ADD_TO_FAVOURITES='ADD_TO_FAVOURITES';
-export const REMOVE_FROM_FAVOURITES='REMOVE_FROM_FAVOURITES';
-
+export const REMOVE_FROM_FAVOURITES='REMOVE_FROM_FAVOURITES';   
+export const ADD_MOVIE_TO_LIST="ADD_MOVIE_TO_LIST";
+export const HANDLE_MOVIE_SEARCH="HANDLE_MOVIE_SEARCH";
 //Action Creators
 export function addMovies(movies){
     return {
@@ -48,7 +49,38 @@ export function removeFromFavourites(movie){
     }
 }
 
+export function addMovieToList(movie){
+    return {
+        type: ADD_MOVIE_TO_LIST,
+        movie,
+    }
+}
+
+export function handleMovieSearch(movie){
+    //Get our data from API.
+    const url=`https://www.omdbapi.com/?apikey=bd5622fe&t=${movie}`;
+    return function(dispatch){
+        fetch(url)
+        .then(response=>response.json())     //to return response as json.
+        .then((movie)=>{
+            console.log(movie);
+            //We recieved our data so we can dispatch,
+        });
+    }
+}
 // Actions are just javascript objects, used to express an intent to change the state.
+//Action creators are generally synchronous and not async and return a object.
+
+//Our Action Creators generally return an Object but in case it returns a function we can check in middleware, 
+//and if we pass a function  we pass dispatch to it.
+//Our middleware will be thunk as thunk is speacial type of function which is returned by a function.
+//If we don't have access of dispatch in a function, we can wrap the portion around a function passing dispatch.
+/*
+
+Error: Actions must be plain objects. Instead, the actual type was: 'undefined'.
+ You may need to add middleware to your store setup to handle dispatching other values,
+  such as 'redux-thunk' to handle dispatching functions.
+*/
 
 /*
 1] for the same input a pure function should give the same output everytime.
