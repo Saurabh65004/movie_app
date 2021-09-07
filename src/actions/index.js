@@ -14,6 +14,7 @@ export const ADD_TO_FAVOURITES='ADD_TO_FAVOURITES';
 export const REMOVE_FROM_FAVOURITES='REMOVE_FROM_FAVOURITES';   
 export const ADD_MOVIE_TO_LIST="ADD_MOVIE_TO_LIST";
 export const HANDLE_MOVIE_SEARCH="HANDLE_MOVIE_SEARCH";
+export const ADD_SEARCH_RESULT="ADD_SEARCH_RESULT";
 //Action Creators
 export function addMovies(movies){
     return {
@@ -65,9 +66,18 @@ export function handleMovieSearch(movie){
         .then((movie)=>{
             console.log(movie);
             //We recieved our data so we can dispatch,
+            dispatch(addMovieSearchResults(movie));
         });
     }
 }
+
+export function addMovieSearchResults(movie){
+    return {
+        type: ADD_SEARCH_RESULT,
+        movie,
+    }
+}
+
 // Actions are just javascript objects, used to express an intent to change the state.
 //Action creators are generally synchronous and not async and return a object.
 

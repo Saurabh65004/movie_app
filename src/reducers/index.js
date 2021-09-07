@@ -1,6 +1,13 @@
 import { combineReducers } from "redux";
 
-import { ADD_MOVIES, ADD_TO_FAVOURITES ,SHOW_FAVOURITES, SHOW_MOVIES, REMOVE_FROM_FAVOURITES} from "../actions";
+import { ADD_MOVIES,
+     ADD_TO_FAVOURITES ,
+     SHOW_FAVOURITES, 
+     SHOW_MOVIES, 
+     REMOVE_FROM_FAVOURITES, 
+     ADD_MOVIE_TO_LIST,
+     ADD_SEARCH_RESULT,
+    } from "../actions";
 //our state will never be undefined but in start if it is pass a default argument.
 
 const initialMovieState={
@@ -39,17 +46,40 @@ export function movies(state=initialMovieState, action){
                 ...state,
                 favouriteDisplay: false,
             }
+        case ADD_MOVIE_TO_LIST:
+            return {
+                ...state,
+                list: [action.movie, ...state.list],
+            }
         default:
             return state;
     }
 }
 
 const initialSearchState={
-    result: {},
+    result: {},     //if using &s in API , as it returns  a list of movie use an array, 
+    showSearchResults: false,
 };
 
+// We can add a case to both the reducers as ADD_MOVIE_TO_LIST since we wanted a change in both search and movies state.
+
 export function search(state=initialSearchState, action){
-    return state;
+    switch(action.type){
+        case ADD_SEARCH_RESULT:
+            return{  
+                ...state,
+                result: action.movie,
+                showSearchResults: true,
+            }
+        case ADD_MOVIE_TO_LIST:
+            return{
+                showSearchResults: false,
+            }
+
+        default:
+            return state;
+    }
+
 }
 
 // const initialRootState={
