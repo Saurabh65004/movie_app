@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
-//import thunk from 'redux-thunk';
+import thunk from 'redux-thunk';
 import './index.css';
 import rootReducer from './reducers';
 import App from './components/App';
@@ -33,15 +33,15 @@ const logger=({dispatch, getState})=>(next)=>(action)=>{
   next(action);
 }
 
-const thunk=({dispatch, getState})=>(next)=>(action)=>{
-  if(typeof action === "function"){
-    action(dispatch); 
-    //if our action is a function we pass dispatch to it to dispatch that action.
-    return;
-  }
-  //if not, pass the action forward.
-  next(action);
-}
+// const thunk=({dispatch, getState})=>(next)=>(action)=>{
+//   if(typeof action === "function"){
+//     action(dispatch); 
+//     //if our action is a function we pass dispatch to it to dispatch that action.
+//     return;
+//   }
+//   //if not, pass the action forward.
+//   next(action);
+// }
 
 const store=createStore(rootReducer, applyMiddleware(logger, thunk));
 // console.log(store);
